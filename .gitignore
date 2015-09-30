@@ -10,6 +10,10 @@ tmp/
 local.properties
 .settings/
 .loadpath
+*.o
+*.d
+*.mk
+*.DS_Store
 
 # Eclipse Core
 .project
