@@ -25,19 +25,19 @@ local.properties
 *.launch
 
 # CDT-specific
-.cproject
+#.cproject
 
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
 # Java annotation processor (APT)
-.factorypath
+#.factorypath
 
 # PDT-specific
-.buildpath
+#.buildpath
 
 # sbteclipse plugin
-.target
+#.target
 
 # TeXlipse plugin
-.texlipse
+#.texlipse
