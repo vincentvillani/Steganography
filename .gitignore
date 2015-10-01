@@ -16,7 +16,7 @@ local.properties
 *.DS_Store
 
 # Eclipse Core
-.project
+#.project
 
 # External tool builders
 .externalToolBuilders/
