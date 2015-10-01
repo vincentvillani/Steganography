@@ -27,7 +27,7 @@ all: Steganography
 # Tool invocations
 Steganography: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
-	@echo 'Invoking: MacOS X C Linker'
+	@echo 'Invoking: Cross GCC Linker'
 	gcc -L/usr/local/lib -o "Steganography" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '

@@ -31,7 +31,7 @@ typedef struct PNG_Util_Data_Struct
 } PNG_Util_Data_Struct;
 
 //Open and read PNG file
-bool png_util_read_png_file(FILE** filePtr, char* filename, PNG_Util_Data_Struct** pngDataStruct);
+bool png_util_read_png_file(FILE** filePtr, char* filename, PNG_Util_Data_Struct* pngDataStruct);
 
 
 
