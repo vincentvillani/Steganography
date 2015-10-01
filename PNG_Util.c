@@ -48,7 +48,7 @@ bool png_util_file_is_png(FILE* filePtr)
 
 //----- PUBLIC IMPLEMENTATION -----
 
-bool png_util_read_png_file(FILE** filePtr, char* filename, PNG_Util_Data_Struct* pngDataStruct)
+bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
 {
 
 	//rb = read, binary

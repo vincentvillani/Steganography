@@ -15,7 +15,7 @@ int main()
 	FILE* filePtr = NULL;
 	char* fileName = "test.png";
 
-	PNG_Util_Data_Struct* testPNG = malloc(sizeof(PNG_Util_Data_Struct));
+	PNG* testPNG = malloc(sizeof(PNG));
 
 	//Open and read the PDF file
 	bool pngFileOpenedSuccessfully = png_util_read_png_file(&filePtr, fileName, testPNG);

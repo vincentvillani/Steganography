@@ -15,7 +15,7 @@
 
 #define PNG_BYTES_TO_CHECK 4
 
-typedef struct PNG_Util_Data_Struct
+typedef struct PNG
 {
 	png_structp pngStruct;
 	png_infop pngInfo;
@@ -28,10 +28,10 @@ typedef struct PNG_Util_Data_Struct
 	png_uint_32 channelNum; //Number of channels
 	png_uint_32 colorType; //Colour type (RGB, RGBA, Luminance, luminance alpha... palette... etc)
 
-} PNG_Util_Data_Struct;
+} PNG;
 
 //Open and read PNG file
-bool png_util_read_png_file(FILE** filePtr, char* filename, PNG_Util_Data_Struct* pngDataStruct);
+bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct);
 
 
 
