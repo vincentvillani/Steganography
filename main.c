@@ -15,6 +15,7 @@ int main()
 	FILE* filePtr = NULL;
 	char* fileName = "test.png";
 
+	//TODO: FREE PNG STRUCTS PROPERLY, SOME THINGS USE PNG_MALLOC ETC
 	PNG* testPNG = malloc(sizeof(PNG));
 
 	//Open and read the PDF file
@@ -26,9 +27,18 @@ int main()
 
 	}
 
-	png_util_write_message(testPNG, "", 1, 1);
+	char* message = "Hello world!";
+	uint32_t messageLength = strlen(message);
+	printf("Message Length: %u\n", messageLength);
 
-	png_util_read_message(testPNG);
+
+	png_util_write_message(testPNG, message, messageLength, 1);
+
+	char* readMessage = png_util_read_message(testPNG);
+
+	printf("%s\n", readMessage);
+
+	free(readMessage);
 
 	/*
 	png_byte r = testPNG->pngData[0][0];

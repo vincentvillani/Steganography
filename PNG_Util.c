@@ -249,6 +249,12 @@ void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLe
 		//Move across by one byte
 		messageLengthBytePointer += 1;
 	}
+
+	//Write the actual message itself
+	for(int i = 0; i < messageCharacterLength; ++i)
+	{
+		write_byte(png, &rowIndex, &columnIndex, (png_byte) *(message + i) );
+	}
 }
 
 
@@ -256,6 +262,8 @@ void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLe
 //Read a message from a PNG image
 char* png_util_read_message(PNG* png)
 {
+	char* message = NULL;
+
 	uint32_t rowIndex = 0;
 	uint32_t columnIndex = 0;
 
@@ -268,10 +276,20 @@ char* png_util_read_message(PNG* png)
 
 	uint32_t* messageLength = (uint32_t*)messageLengthBytes;
 
-	printf("Message length: %u", *messageLength);
+	printf("Message length: %u\n", *messageLength);
+
+	//+1 for the null terminator
+	message = malloc(sizeof(char) * (*messageLength + 1));
 
 
-	return "";
+	for(int i = 0; i < *messageLength; ++i)
+	{
+		message[i] = read_byte(png, &rowIndex, &columnIndex);
+	}
+
+	message[*messageLength - 1] = '\0';
+
+	return message;
 
 }
 
