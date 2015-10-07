@@ -38,4 +38,11 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct);
 uint32_t png_util_total_message_byte_storage(PNG* png, uint32_t messageBitsPerChannel);
 
 
+//Write a message to a PNG image
+void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLength, uint32_t messageBitsPerChannel);
+
+//Read a message from a PNG image
+char* png_util_read_message(PNG* png);
+
+
 #endif /* PNG_UTIL_H_ */

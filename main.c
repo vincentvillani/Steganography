@@ -26,17 +26,23 @@ int main()
 
 	}
 
+	png_util_write_message(testPNG, "", 1, 1);
+
+	png_util_read_message(testPNG);
+
+	/*
 	png_byte r = testPNG->pngData[0][0];
 	png_byte g = testPNG->pngData[0][1];
 	png_byte b = testPNG->pngData[0][2];
 	png_byte a = testPNG->pngData[0][3];
 
-
-	uint32_t byteStorage = png_util_total_message_byte_storage(testPNG, 1);
-	printf("%d\n", byteStorage);
+	//uint32_t byteStorage = png_util_total_message_byte_storage(testPNG, 1);
+	//printf("%d\n", byteStorage);
 
 	//Print out the value of the first pixel
-	printf("%u, %u, %u, %u\n", r, g, b, a);
+	//printf("%u, %u, %u, %u\n", r, g, b, a);
+	 *
+	 */
 
 	return 0;
 }
