@@ -229,7 +229,7 @@ void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLe
 	//subtract for bytes to store the message length in the image itself, so we can tell how big our message is
 	if(messageCharacterLength > (storageLimit - 4) )
 	{
-		printf("The image is too big to store in this image!\n");
+		printf("The message is too big to store in this image!\n");
 		return;
 	}
 
