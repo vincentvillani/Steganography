@@ -33,6 +33,9 @@ typedef struct PNG
 //Open and read PNG file
 bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct);
 
+//Returns the number of bytes a message could store if you used x number of bits per channel
+//x = messageBitsPerChannel
+uint32_t png_util_total_message_byte_storage(PNG* png, uint32_t messageBitsPerChannel);
 
 
 #endif /* PNG_UTIL_H_ */

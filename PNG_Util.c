@@ -134,4 +134,13 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
 
 
 
+uint32_t png_util_total_message_byte_storage(PNG* png, uint32_t messageBitsPerChannel)
+{
+	//Number of bytes =  (messageBitsPerChannel * channels per pixel * pixelWidth * pixelHeight) / 8
+	return (messageBitsPerChannel * png->channelNum * png->imageWidth * png->imageHeight) / 8;
+}
+
+
+
+
 

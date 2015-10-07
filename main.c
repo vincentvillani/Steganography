@@ -32,6 +32,8 @@ int main()
 	png_byte a = testPNG->pngData[0][3];
 
 
+	uint32_t byteStorage = png_util_total_message_byte_storage(testPNG, 1);
+	printf("%d\n", byteStorage);
 
 	//Print out the value of the first pixel
 	printf("%u, %u, %u, %u\n", r, g, b, a);
