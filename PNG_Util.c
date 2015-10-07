@@ -292,12 +292,3 @@ char* png_util_read_message(PNG* png)
 	return message;
 
 }
-
-
-
-
-
-
-
-
-
