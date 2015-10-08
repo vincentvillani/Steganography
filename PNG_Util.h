@@ -45,4 +45,7 @@ void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLe
 char* png_util_read_message(PNG* png);
 
 
+void png_util_free_PNG(PNG* png);
+
+
 #endif /* PNG_UTIL_H_ */

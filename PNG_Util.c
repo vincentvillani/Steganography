@@ -177,6 +177,7 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
 	png_init_io(pngDataStruct->pngStruct, *filePtr);
 
     //Now call png_read_info to receive the file info from the header file?
+	//I.E. meta data from the front of the file, you can also read data from the end of the file somehow.
     png_read_info(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
 
     //Get a bunch of data about the image
@@ -215,8 +216,8 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
 
 uint32_t png_util_total_message_byte_storage(PNG* png, uint32_t messageBitsPerChannel)
 {
-	//Number of bytes =  (messageBitsPerChannel * channels per pixel * pixelWidth * pixelHeight) / 8
-	return (messageBitsPerChannel * png->channelNum * png->imageWidth * png->imageHeight) / 8;
+	//Number of bytes = (channels per pixel * pixelWidth * pixelHeight) / 8
+	return (png->channelNum * png->imageWidth * png->imageHeight) / 8;
 }
 
 
@@ -291,4 +292,23 @@ char* png_util_read_message(PNG* png)
 
 	return message;
 
+}
+
+
+void png_util_free_PNG(PNG* png)
+{
+	//Free the actual memory used to store each channel data
+	for(int i = 0; i < png->imageHeight; ++i)
+	{
+		png_free(png->pngStruct, png->pngData[i]);
+		png->pngData[i] = NULL;
+	}
+
+	//Free the pointers used to store the images row addresses
+	free(png->pngData);
+	png->pngData = NULL;
+
+	png_destroy_read_struct( &(png->pngStruct), &(png->pngInfo), NULL);
+	png->pngStruct = NULL;
+	png->pngInfo = NULL;
 }
