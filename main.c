@@ -10,6 +10,10 @@
 
 #include "PNG_Util.h"
 
+//TODO: Add a command parser
+//TODO: Remove parts of the code that still use 'messageBitsPerChannel' or whatever it is, only use 1 bit. At least for now
+//TODO: Keep existing metadata intact when writing out a file
+
 int main()
 {
 	char* inputFileName = "test.png";
