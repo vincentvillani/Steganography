@@ -349,7 +349,8 @@ char* png_util_read_message(PNG* png)
 		message[i] = read_byte(png, &rowIndex, &columnIndex);
 	}
 
-	message[*messageLength - 1] = '\0';
+	//Set the null terminator as the last character
+	message[*messageLength] = '\0';
 
 	return message;
 

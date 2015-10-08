@@ -15,30 +15,31 @@ int main()
 	char* inputFileName = "test.png";
 	char* exportFileName = "new.png";
 
-	//TODO: FREE PNG STRUCTS PROPERLY, SOME THINGS USE PNG_MALLOC ETC
 	PNG* testPNG = malloc(sizeof(PNG));
 
 	//Open and read the PDF file
-	bool pngFileOpenedSuccessfully = png_util_read_png_file(exportFileName, testPNG);
-
-	if(pngFileOpenedSuccessfully)
+	if(png_util_read_png_file(exportFileName, testPNG))
 	{
 		printf("File opened!\n");
-
 	}
 
 
 	printf("Total available characters: %u\n", png_util_total_message_byte_storage(testPNG, 1));
 
+	//char* message = "Hello my name is Vincent!!";
+	//uint32_t messageLength = strlen(message);
 
 	//png_util_write_message(testPNG, message, messageLength, 1);
 
 	char* readMessage = png_util_read_message(testPNG);
 
+	//png_util_write_png_file(exportFileName, testPNG);
+
 	printf("%s\n", readMessage);
 
 	free(readMessage);
 	png_util_free_PNG(testPNG);
+	free(testPNG);
 
 	return 0;
 }
