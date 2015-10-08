@@ -127,11 +127,11 @@ static png_byte read_byte(PNG* png, uint32_t* rowIndex, uint32_t* columnIndex)
 
 //----- PUBLIC IMPLEMENTATION -----
 
-bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
+bool png_util_read_png_file(char* filename, PNG* pngDataStruct)
 {
 
 	//rb = read, binary
-	*filePtr = fopen(filename, "rb");
+	FILE* filePtr = fopen(filename, "rb");
 
 	if(filePtr == NULL)
 	{
@@ -140,7 +140,7 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
 	}
 
 	//Check if this file is actually a PNG file
-	if(!file_is_png(*filePtr))
+	if(!file_is_png(filePtr))
 	{
 		printf("file is not a PNG file\n");
 		return false;
@@ -174,7 +174,7 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
 	png_set_sig_bytes(pngDataStruct->pngStruct, PNG_BYTES_TO_CHECK);
 
 	//Setup the file I/O for this PNG, we are going to load it from a file
-	png_init_io(pngDataStruct->pngStruct, *filePtr);
+	png_init_io(pngDataStruct->pngStruct, filePtr);
 
     //Now call png_read_info to receive the file info from the header file?
 	//I.E. meta data from the front of the file, you can also read data from the end of the file somehow.
@@ -187,6 +187,9 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
     pngDataStruct->bitDepth = png_get_bit_depth(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
     pngDataStruct->channelNum = png_get_channels(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
     pngDataStruct->colorType = png_get_color_type(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
+    pngDataStruct->interlaceType = png_get_interlace_type(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
+    pngDataStruct->compressionType = png_get_compression_type(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
+    pngDataStruct->filterType = png_get_filter_type(pngDataStruct->pngStruct, pngDataStruct->pngInfo);
 
     //Allocate memory to hold the PNG data
 
@@ -205,12 +208,70 @@ bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct)
     //Read the entire image
     png_read_image(pngDataStruct->pngStruct, pngDataStruct->pngData);
 
-    fclose(*filePtr);
+    fclose(filePtr);
 
     //Everything has gone successfully, return true
 	return true;
 }
 
+
+//Open and write a PNG file
+bool png_util_write_png_file(char* filename, PNG* png)
+{
+	//Write binary
+	FILE* filePtr = fopen(filename, "wb");
+
+	if(filePtr == NULL)
+	{
+		printf("Cannot create/write a PNG file at this location\n");
+		return false;
+	}
+
+	//Create a write struct
+    png_structp write_struct_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+
+    if (!write_struct_ptr)
+    {
+    	printf("Unable to create a PNG write structure\n");
+    	return false;
+    }
+
+    //Create a info struct for the write struct
+    png_infop write_info_ptr = png_create_info_struct(write_struct_ptr);
+
+    if (!write_info_ptr)
+    {
+       png_destroy_write_struct(&write_struct_ptr, NULL);
+       printf("Unable to create a PNG info structure\n");
+       return false;
+    }
+
+	png_init_io(write_struct_ptr, filePtr);
+
+	//Set up the data so the image can be written
+	png_set_IHDR(write_struct_ptr, write_info_ptr, png->imageWidth, png->imageHeight, png->bitDepth, png->colorType, png->interlaceType,
+			png->compressionType, png->filterType);
+
+	//Use the high level interface to write the data to a file
+
+	//Get the rows from the input image that already exists in memory and set it to the rows for the write structs
+	png_set_rows(write_struct_ptr, write_info_ptr, png->pngData);
+
+	//Write the PNG image out to the file
+	png_write_png(write_struct_ptr, write_info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+
+	/*
+	//Write the actual image data
+	png_write_image(write_struct_ptr, png->pngData);
+	png_write_end(write_struct_ptr, NULL);
+	*/
+
+	//Free the allocated structs
+	png_destroy_write_struct(&write_struct_ptr, &write_info_ptr);
+	fclose(filePtr);
+
+	return true;
+}
 
 
 

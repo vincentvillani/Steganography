@@ -12,14 +12,14 @@
 
 int main()
 {
-	FILE* filePtr = NULL;
-	char* fileName = "test.png";
+	char* inputFileName = "test.png";
+	char* exportFileName = "new.png";
 
 	//TODO: FREE PNG STRUCTS PROPERLY, SOME THINGS USE PNG_MALLOC ETC
 	PNG* testPNG = malloc(sizeof(PNG));
 
 	//Open and read the PDF file
-	bool pngFileOpenedSuccessfully = png_util_read_png_file(&filePtr, fileName, testPNG);
+	bool pngFileOpenedSuccessfully = png_util_read_png_file(exportFileName, testPNG);
 
 	if(pngFileOpenedSuccessfully)
 	{
@@ -27,12 +27,11 @@ int main()
 
 	}
 
-	char* message = "Hello world!";
-	uint32_t messageLength = strlen(message);
-	printf("Message Length: %u\n", messageLength);
+
+	printf("Total available characters: %u\n", png_util_total_message_byte_storage(testPNG, 1));
 
 
-	png_util_write_message(testPNG, message, messageLength, 1);
+	//png_util_write_message(testPNG, message, messageLength, 1);
 
 	char* readMessage = png_util_read_message(testPNG);
 

@@ -17,21 +17,27 @@
 
 typedef struct PNG
 {
-	png_structp pngStruct;
-	png_infop pngInfo;
+	png_structp pngStruct; //Basically a handle to the PNG
+	png_infop pngInfo; //Information derived from the header of the PNG
 	png_byte** pngData; //The actual pixel data, [row][column]
 
-	png_uint_32 imageWidth;
-	png_uint_32 imageHeight;
+	png_uint_32 imageWidth; //Image width in pixels
+	png_uint_32 imageHeight; //Image height in pixels
 
 	png_uint_32 bitDepth; //Bits per CHANNEL! - NOT PIXEL
 	png_uint_32 channelNum; //Number of channels
 	png_uint_32 colorType; //Colour type (RGB, RGBA, Luminance, luminance alpha... palette... etc)
+	png_byte interlaceType; //Interlace type
+	png_byte compressionType; //Compression type
+	png_byte filterType; //Filter type
 
 } PNG;
 
 //Open and read PNG file
-bool png_util_read_png_file(FILE** filePtr, char* filename, PNG* pngDataStruct);
+bool png_util_read_png_file(char* filename, PNG* pngDataStruct);
+
+//Open and write a PNG file
+bool png_util_write_png_file(char* filename, PNG* png);
 
 //Returns the number of bytes a message could store if you used x number of bits per channel
 //x = messageBitsPerChannel
