@@ -41,11 +41,11 @@ bool png_util_write_png_file(char* filename, PNG* png);
 
 //Returns the number of bytes a message could store if you used x number of bits per channel
 //x = messageBitsPerChannel
-uint32_t png_util_total_message_byte_storage(PNG* png, uint32_t messageBitsPerChannel);
+uint32_t png_util_total_message_byte_storage(PNG* png);
 
 
 //Write a message to a PNG image
-void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLength, uint32_t messageBitsPerChannel);
+void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLength);
 
 //Read a message from a PNG image
 char* png_util_read_message(PNG* png);

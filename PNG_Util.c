@@ -275,21 +275,20 @@ bool png_util_write_png_file(char* filename, PNG* png)
 
 
 
-uint32_t png_util_total_message_byte_storage(PNG* png, uint32_t messageBitsPerChannel)
+uint32_t png_util_total_message_byte_storage(PNG* png)
 {
-	//Number of bytes = (channels per pixel * pixelWidth * pixelHeight) / 8
-	return (png->channelNum * png->imageWidth * png->imageHeight) / 8;
+	//Number of bytes = (channels per pixel * pixelWidth * pixelHeight) / 8, minus 4 because the first four bytes is the message length
+	return ((png->channelNum * png->imageWidth * png->imageHeight) / 8) - 4;
 }
 
 
 
-void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLength, uint32_t messageBitsPerChannel)
+void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLength)
 {
-	uint32_t storageLimit = png_util_total_message_byte_storage(png, messageBitsPerChannel);
+	uint32_t storageLimit = png_util_total_message_byte_storage(png);
 
 	//Is the message to big to store in this image?
-	//subtract for bytes to store the message length in the image itself, so we can tell how big our message is
-	if(messageCharacterLength > (storageLimit - 4) )
+	if(messageCharacterLength > (storageLimit) )
 	{
 		printf("The message is too big to store in this image!\n");
 		return;

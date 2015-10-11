@@ -14,7 +14,7 @@
 //TODO: Remove parts of the code that still use 'messageBitsPerChannel' or whatever it is, only use 1 bit. At least for now
 //TODO: Keep existing metadata intact when writing out a file
 
-int main()
+int main(int argc, char* argv[])
 {
 	char* inputFileName = "test.png";
 	char* exportFileName = "new.png";
@@ -28,7 +28,7 @@ int main()
 	}
 
 
-	printf("Total available characters: %u\n", png_util_total_message_byte_storage(testPNG, 1));
+	printf("Total available characters: %u\n", png_util_total_message_byte_storage(testPNG));
 
 	//char* message = "Hello my name is Vincent!!";
 	//uint32_t messageLength = strlen(message);
