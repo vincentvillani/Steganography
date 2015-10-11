@@ -9,13 +9,16 @@
 #include <string.h>
 
 #include "PNG_Util.h"
+#include "CommandLineParse.h"
 
 //TODO: Add a command parser
-//TODO: Remove parts of the code that still use 'messageBitsPerChannel' or whatever it is, only use 1 bit. At least for now
 //TODO: Keep existing metadata intact when writing out a file
 
 int main(int argc, char* argv[])
 {
+	CLA* commandLineArgs = setup(argc, argv);
+
+
 	char* inputFileName = "test.png";
 	char* exportFileName = "new.png";
 
@@ -44,6 +47,7 @@ int main(int argc, char* argv[])
 	free(readMessage);
 	png_util_free_PNG(testPNG);
 	free(testPNG);
+	free(commandLineArgs);
 
 	return 0;
 }
