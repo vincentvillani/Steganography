@@ -11,14 +11,29 @@
 #include "PNG_Util.h"
 #include "CommandLineParse.h"
 
-//TODO: Add a command parser
+//TODO: -v (version)
+//TODO: default help...(If no arguments are passed)
+//TODO: Clean up command parser (Comment & fix up shitty code?)
+//TODO: make install (Bundle pnglib??)
+//TODO: Comment and clean up
 //TODO: Keep existing metadata intact when writing out a file
+
+
+
+
+
+
 
 int main(int argc, char* argv[])
 {
 	CLA* commandLineArgs = setup(argc, argv);
 
 
+	run(commandLineArgs);
+
+	free(commandLineArgs);
+
+	/*
 	char* inputFileName = "test.png";
 	char* exportFileName = "new.png";
 
@@ -48,6 +63,7 @@ int main(int argc, char* argv[])
 	png_util_free_PNG(testPNG);
 	free(testPNG);
 	free(commandLineArgs);
+	*/
 
 	return 0;
 }

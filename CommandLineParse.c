@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "PNG_Util.h"
 
 CLA* setup(int argc, char* argv[])
 {
@@ -53,6 +54,9 @@ CLA* setup(int argc, char* argv[])
 
 	if(result->encoding)
 	{
+		bool foundOutputFilename = false;
+		bool foundMessage = false;
+
 
 		for(int i = 2; i < argc; ++i)
 		{
@@ -64,6 +68,7 @@ CLA* setup(int argc, char* argv[])
 				{
 					result->message = argv[i + 1];
 					printf("Message: %s\n", result->message);
+					foundMessage = true;
 					break;
 				}
 				else
@@ -85,7 +90,8 @@ CLA* setup(int argc, char* argv[])
 				if(i + 1 < argc)
 				{
 					result->outputFileName = argv[i + 1];
-					printf("Output filename: %s", result->outputFileName);
+					printf("Output filename: %s\n", result->outputFileName);
+					foundOutputFilename = true;
 					break;
 				}
 				else
@@ -95,6 +101,24 @@ CLA* setup(int argc, char* argv[])
 				}
 			}
 		}
+
+
+		//Error messages
+		if(!foundMessage || !foundOutputFilename)
+		{
+			if(!foundMessage)
+			{
+				fprintf(stderr, "If encoding please include a message: -f \"Message\"\n");
+			}
+
+			if(!foundOutputFilename)
+			{
+				fprintf(stderr, "If encoding please include an output filename: -o filename.png\n");
+			}
+
+			exit(1);
+		}
+
 	}
 	else //We are decoding
 	{
@@ -105,4 +129,36 @@ CLA* setup(int argc, char* argv[])
 	//exit(2);
 
 	return result;
+}
+
+
+
+
+void run(CLA* CLA)
+{
+	PNG* png = malloc(sizeof(PNG));
+
+	if(CLA->encoding)
+	{
+		png_util_read_png_file(CLA->inputFileName, png);
+
+		uint32_t messageLength = strlen(CLA->message);
+		png_util_write_message(png, CLA->message, messageLength);
+
+		png_util_write_png_file(CLA->outputFileName, png);
+
+	}
+	else
+	{
+		png_util_read_png_file(CLA->inputFileName, png);
+
+		CLA->message = png_util_read_message(png);
+
+		printf("Decoded message: %s\n", CLA->message);
+	}
+
+	//png_util_read_png_file(exportFileName, testPNG);
+
+	png_util_free_PNG(png);
+
 }

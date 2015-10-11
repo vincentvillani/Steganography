@@ -23,6 +23,7 @@ typedef struct CLA
 
 
 CLA* setup(int argc, char* argv[]);
+void run(CLA* CLA);
 
 
 #endif /* COMMANDLINEPARSE_H_ */

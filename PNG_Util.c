@@ -372,4 +372,7 @@ void png_util_free_PNG(PNG* png)
 	png_destroy_read_struct( &(png->pngStruct), &(png->pngInfo), NULL);
 	png->pngStruct = NULL;
 	png->pngInfo = NULL;
+
+	free(png);
+	png = NULL;
 }
