@@ -28,4 +28,7 @@ CLA* setup(int argc, char* argv[]);
 void run(CLA* CLA);
 
 
+void readMessageFile(CLA* CLA, char* fileName);
+
+
 #endif /* COMMANDLINEPARSE_H_ */

@@ -87,13 +87,37 @@ CLA* setup(int argc, char* argv[])
 		//Look for the -m message flag
 		for(int i = 2; i < argc; ++i)
 		{
+
+			//We found the file message flag
+			if(strcmp(argv[i], "-mf") == 0)
+			{
+				//We found the messages filename
+				if(i + 1 < argc)
+				{
+					readMessageFile(result, argv[i + 1]);
+
+					printf("Message: %s\n", result->message);
+					foundMessage = true;
+					break;
+				}
+				else
+				{
+					fprintf(stderr, "If using the -mf switch please specify a filename containing the message.\n");
+					exit(1);
+				}
+			}
+
 			//We found the message flag
-			if(strcmp(argv[i], "-m") == 0)
+			else if(strcmp(argv[i], "-m") == 0)
 			{
 				//We found the message itself
 				if(i + 1 < argc)
 				{
-					result->message = argv[i + 1];
+					size_t messageLength = strlen(argv[i + 1]);
+					result->message =  (char*)malloc(sizeof(char) * (messageLength + 1));
+					memcpy(result->message, argv[i + 1], messageLength);
+					result->message[messageLength] = '\0';
+
 					printf("Message: %s\n", result->message);
 					foundMessage = true;
 					break;
@@ -135,7 +159,7 @@ CLA* setup(int argc, char* argv[])
 		{
 			if(!foundMessage)
 			{
-				fprintf(stderr, "If encoding please include a message: -f \"Message\"\n");
+				fprintf(stderr, "If encoding please include a message: -m \"Message\" OR -mf \"messageFile.txt\"\n");
 			}
 
 			if(!foundOutputFilename)
@@ -183,12 +207,47 @@ void run(CLA* CLA)
 		CLA->message = png_util_read_message(png);
 
 		printf("Decoded message: %s\n", CLA->message);
-
-		//Free the memory of the decoded memory
-		free(CLA->message);
 	}
 
 	//Free the memory from the PNG struct
 	png_util_free_PNG(png);
+
+}
+
+
+
+void readMessageFile(CLA* CLA, char* fileName)
+{
+	CLA->message = NULL;
+	long int messageSize = 0;
+
+	FILE* file = fopen(fileName, "rb");
+
+	if(file == NULL)
+	{
+		fprintf(stderr, "Unable to open message file: %s\nAborting...", fileName);
+		exit(1);
+	}
+
+	if(fseek(file, 0L, SEEK_END) != 0)
+	{
+		fprintf(stderr, "Cannot determine length of the message file: %s\nAborting...", fileName);
+		exit(1);
+	}
+
+	messageSize = ftell(file);
+
+	CLA->message = (char*)malloc(sizeof(char) * (messageSize + 1));
+
+	//Back to the beginning of the file
+	rewind(file);
+
+	//read the file
+	fread(CLA->message, messageSize, 1, file);
+
+	//Set null character
+	CLA->message[messageSize] = '\0';
+
+	//printf("FILE MESSAGE: %s\n\n", CLA->message);
 
 }

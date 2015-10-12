@@ -14,7 +14,7 @@
 //TODO: Read message from a file
 //TODO: encrypt message before storing?
 //TODO: Keep existing metadata intact when writing out a file
-
+//TODO: CLA->message should always allocate its own memory, copy the message and then be freed when finshed
 
 int main(int argc, char* argv[])
 {
@@ -24,6 +24,11 @@ int main(int argc, char* argv[])
 	run(commandLineArgs);
 
 	//Deallocate memory for CLA
+	if(commandLineArgs->message != NULL)
+	{
+		free(commandLineArgs->message);
+	}
+
 	free(commandLineArgs);
 
 	return 0;
