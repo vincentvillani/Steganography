@@ -22,19 +22,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Steganography
+all: sunflower
 
 # Tool invocations
-Steganography: $(OBJS) $(USER_OBJS)
+sunflower: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	gcc -L/usr/local/lib -o "Steganography" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L/usr/local/lib -o "sunflower" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) Steganography
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) sunflower
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -18,19 +18,19 @@ static void displayHelpError(); //Just uses stderr, kinda dumbbbbb
 
 static void displayHelp()
 {
-	printf("\n--- Steggy ---\n");
+	printf("\n--- sunflower ---\n");
 	printf("Version: 1.0\n");
 	printf("\nExample Usage:\n");
-	printf("Encoding: steggy e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
-	printf("Decoding: steggy d inputFilename.png\n\n");
+	printf("Encoding: sunflower e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
+	printf("Decoding: sunflower d inputFilename.png\n\n");
 }
 
 
 static void displayHelpError()
 {
 	fprintf(stderr, "\nExample Usage:\n");
-	fprintf(stderr, "Encoding: steggy e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
-	fprintf(stderr, "Decoding: steggy d inputFilename.png\n\n");
+	fprintf(stderr, "Encoding: sunflower e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
+	fprintf(stderr, "Decoding: sunflower d inputFilename.png\n\n");
 }
 
 CLA* setup(int argc, char* argv[])
@@ -46,7 +46,7 @@ CLA* setup(int argc, char* argv[])
 	//Do we have the needed arguments?
 	if(argc < 3)
 	{
-		fprintf(stderr, "\nError you are not passing the required arguments!\nPlease see the examples below on how to use Steggy.\n");
+		fprintf(stderr, "\nError you are not passing the required arguments!\nPlease see the examples below on how to use sunflower.\n");
 		displayHelpError();
 		exit(1);
 	}
@@ -84,7 +84,7 @@ CLA* setup(int argc, char* argv[])
 		bool foundOutputFilename = false;
 		bool foundMessage = false;
 
-
+		//Look for the -m message flag
 		for(int i = 2; i < argc; ++i)
 		{
 			//We found the message flag
@@ -147,13 +147,13 @@ CLA* setup(int argc, char* argv[])
 		}
 
 	}
+
+	/*
 	else //We are decoding
 	{
 
-	}
+	}*/
 
-	//TODO: FIX THIS!
-	//exit(2);
 
 	return result;
 }
@@ -165,6 +165,7 @@ void run(CLA* CLA)
 {
 	PNG* png = malloc(sizeof(PNG));
 
+	//Encode the message into the input file and write out the new image to the output file
 	if(CLA->encoding)
 	{
 		png_util_read_png_file(CLA->inputFileName, png);
@@ -175,17 +176,19 @@ void run(CLA* CLA)
 		png_util_write_png_file(CLA->outputFileName, png);
 
 	}
-	else
+	else //Read in the input image and decode the message
 	{
 		png_util_read_png_file(CLA->inputFileName, png);
 
 		CLA->message = png_util_read_message(png);
 
 		printf("Decoded message: %s\n", CLA->message);
+
+		//Free the memory of the decoded memory
+		free(CLA->message);
 	}
 
-	//png_util_read_png_file(exportFileName, testPNG);
-
+	//Free the memory from the PNG struct
 	png_util_free_PNG(png);
 
 }

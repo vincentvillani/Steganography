@@ -10,7 +10,7 @@
 
 #include <stdbool.h>
 
-
+//Struct to store the command line arguments for the current run
 typedef struct CLA
 {
 	char* inputFileName;
@@ -21,8 +21,10 @@ typedef struct CLA
 
 } CLA;
 
-
+//Figure out what the user wants to do this run through the program
 CLA* setup(int argc, char* argv[]);
+
+//Either decode or encode, depending on the values set in the CLA struct
 void run(CLA* CLA);
 
 

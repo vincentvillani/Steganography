@@ -4,6 +4,7 @@
 bin/
 tmp/
 Debug/
+Release/
 *.tmp
 *.bak
 *.swp

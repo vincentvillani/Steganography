@@ -11,17 +11,9 @@
 #include "PNG_Util.h"
 #include "CommandLineParse.h"
 
-//TODO: -v (version)
-//TODO: default help...(If no arguments are passed)
-//TODO: Clean up command parser (Comment & fix up shitty code?)
+
 //TODO: make install (Bundle pnglib??)
-//TODO: Comment and clean up
 //TODO: Keep existing metadata intact when writing out a file
-
-
-
-
-
 
 
 int main(int argc, char* argv[])
