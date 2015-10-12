@@ -5,6 +5,7 @@ bin/
 tmp/
 Debug/
 Release/
+libpng-1.6.17/
 *.tmp
 *.bak
 *.swp
@@ -16,6 +17,7 @@ local.properties
 *.d
 *.mk
 *.DS_Store
+
 
 # Eclipse Core
 #.project
