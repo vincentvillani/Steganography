@@ -55,6 +55,7 @@ CLA* setup(int argc, char* argv[])
 	result->inputFileName = NULL;
 	result->outputFileName = NULL;
 	result->message = NULL;
+	result->messageOutputFilename = NULL;
 
 	//Are we encoding or decoding?
 	if(strcmp(argv[1], "e") == 0 || strcmp(argv[1], "E") == 0)
@@ -171,12 +172,31 @@ CLA* setup(int argc, char* argv[])
 		}
 
 	}
-
-	/*
 	else //We are decoding
 	{
+		//Look for the -mf message flag
+		for(int i = 2; i < argc; ++i)
+		{
 
-	}*/
+			//We found the file message flag
+			if(strcmp(argv[i], "-mf") == 0)
+			{
+				//We found the messages filename
+				if(i + 1 < argc)
+				{
+					result->messageOutputFilename = argv[i + 1];
+
+					printf("Message output filename: %s\n", result->messageOutputFilename);
+					break;
+				}
+				else
+				{
+					fprintf(stderr, "If using the -mf switch please specify a filename containing the message.\n");
+					exit(1);
+				}
+			}
+		}
+	}
 
 
 	return result;
@@ -205,6 +225,11 @@ void run(CLA* CLA)
 		png_util_read_png_file(CLA->inputFileName, png);
 
 		CLA->message = png_util_read_message(png);
+
+		if(CLA->messageOutputFilename != NULL)
+		{
+			writeMessageFile(CLA);
+		}
 
 		printf("Decoded message: %s\n", CLA->message);
 	}
@@ -248,6 +273,26 @@ void readMessageFile(CLA* CLA, char* fileName)
 	//Set null character
 	CLA->message[messageSize] = '\0';
 
-	//printf("FILE MESSAGE: %s\n\n", CLA->message);
+	fclose(file);
+
+}
+
+
+
+void writeMessageFile(CLA* CLA)
+{
+	size_t messageSize = strlen(CLA->message) + 1;
+
+	FILE* file = fopen(CLA->messageOutputFilename, "wb");
+
+	if(file == NULL)
+	{
+		fprintf(stderr, "Unable to open message file: %s\nAborting...", CLA->messageOutputFilename);
+		exit(1);
+	}
+
+	fwrite(CLA->message, messageSize, 1, file);
+
+	fclose(file);
 
 }

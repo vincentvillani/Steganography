@@ -16,6 +16,7 @@ typedef struct CLA
 	char* inputFileName;
 	char* outputFileName;
 	char* message;
+	char* messageOutputFilename;
 
 	bool encoding; //True if encoding, false if decoding
 
@@ -29,6 +30,7 @@ void run(CLA* CLA);
 
 
 void readMessageFile(CLA* CLA, char* fileName);
+void writeMessageFile(CLA* CLA);
 
 
 #endif /* COMMANDLINEPARSE_H_ */

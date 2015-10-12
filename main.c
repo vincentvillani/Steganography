@@ -24,11 +24,8 @@ int main(int argc, char* argv[])
 	run(commandLineArgs);
 
 	//Deallocate memory for CLA
-	if(commandLineArgs->message != NULL)
-	{
-		free(commandLineArgs->message);
-	}
 
+	free(commandLineArgs->message);
 	free(commandLineArgs);
 
 	return 0;
