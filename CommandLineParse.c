@@ -12,15 +12,42 @@
 #include <string.h>
 #include "PNG_Util.h"
 
+static void displayHelp();
+static void displayHelpError(); //Just uses stderr, kinda dumbbbbb
+
+
+static void displayHelp()
+{
+	printf("\n--- Steggy ---\n");
+	printf("Version: 1.0\n");
+	printf("\nExample Usage:\n");
+	printf("Encoding: steggy e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
+	printf("Decoding: steggy d inputFilename.png\n\n");
+}
+
+
+static void displayHelpError()
+{
+	fprintf(stderr, "\nExample Usage:\n");
+	fprintf(stderr, "Encoding: steggy e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
+	fprintf(stderr, "Decoding: steggy d inputFilename.png\n\n");
+}
+
 CLA* setup(int argc, char* argv[])
 {
 	CLA* result = NULL;
 
+	if(argc == 1)
+	{
+		displayHelp();
+		exit(0);
+	}
+
 	//Do we have the needed arguments?
-	//TODO: FIX THIS!
 	if(argc < 3)
 	{
-		fprintf(stderr, "Please pass the required arguments\n");
+		fprintf(stderr, "\nError you are not passing the required arguments!\nPlease see the examples below on how to use Steggy.\n");
+		displayHelpError();
 		exit(1);
 	}
 

@@ -33,6 +33,7 @@ typedef struct PNG
 
 } PNG;
 
+
 //Open and read PNG file
 bool png_util_read_png_file(char* filename, PNG* pngDataStruct);
 
@@ -50,7 +51,7 @@ void png_util_write_message(PNG* png, char* message, uint32_t messageCharacterLe
 //Read a message from a PNG image
 char* png_util_read_message(PNG* png);
 
-
+//Free allocated memory from the PNG struct
 void png_util_free_PNG(PNG* png);
 
 

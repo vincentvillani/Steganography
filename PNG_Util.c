@@ -8,9 +8,9 @@
 #include "PNG_Util.h"
 
 //----- PRIVATE -----
-//Check if this file is a PNG file
 
 //Static in this context and in C means that this can only be accessed inside this compilation unit
+//Check if this file is a PNG file
 //Returns true if the file is a PNG file
 static bool file_is_png(FILE* file);
 
