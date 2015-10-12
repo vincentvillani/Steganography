@@ -11,8 +11,8 @@
 #include "PNG_Util.h"
 #include "CommandLineParse.h"
 
-
-//TODO: make install (Bundle pnglib??)
+//TODO: Read message from a file
+//TODO: encrypt message before storing?
 //TODO: Keep existing metadata intact when writing out a file
 
 
