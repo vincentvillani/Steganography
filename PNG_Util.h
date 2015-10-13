@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <png.h>
+#include <stdint.h>
 
 #define PNG_BYTES_TO_CHECK 4
 
