@@ -18,7 +18,7 @@ static void displayHelpError(); //Just uses stderr, kinda dumbbbbb
 
 static void displayHelp()
 {
-	printf("\n--- sunflower ---\n");
+	printf("\nsunflower\n");
 	printf("Version: 1.0\n");
 	printf("\nExample Usage:\n");
 	printf("Encoding: sunflower e inputFilename.png -o outputFilename.png -m \"My super secret message\"\n");
@@ -60,12 +60,12 @@ CLA* setup(int argc, char* argv[])
 	//Are we encoding or decoding?
 	if(strcmp(argv[1], "e") == 0 || strcmp(argv[1], "E") == 0)
 	{
-		printf("We are encoding!\n");
+		//printf("We are encoding!\n");
 		result->encoding = true;
 	}
 	else if(strcmp(argv[1], "d") == 0 || strcmp(argv[1], "D") == 0)
 	{
-		printf("We are decoding!\n");
+		//printf("We are decoding!\n");
 		result->encoding = false;
 	}
 	else
@@ -77,7 +77,7 @@ CLA* setup(int argc, char* argv[])
 
 	//What is the input filename
 	result->inputFileName = argv[2];
-	printf("Input filename: %s\n", result->inputFileName);
+	//printf("Input filename: %s\n", result->inputFileName);
 
 
 	if(result->encoding)
@@ -97,7 +97,7 @@ CLA* setup(int argc, char* argv[])
 				{
 					readMessageFile(result, argv[i + 1]);
 
-					printf("Message: %s\n", result->message);
+					//printf("Message: %s\n", result->message);
 					foundMessage = true;
 					break;
 				}
@@ -119,7 +119,7 @@ CLA* setup(int argc, char* argv[])
 					memcpy(result->message, argv[i + 1], messageLength);
 					result->message[messageLength] = '\0';
 
-					printf("Message: %s\n", result->message);
+					//printf("Message: %s\n", result->message);
 					foundMessage = true;
 					break;
 				}
@@ -142,7 +142,7 @@ CLA* setup(int argc, char* argv[])
 				if(i + 1 < argc)
 				{
 					result->outputFileName = argv[i + 1];
-					printf("Output filename: %s\n", result->outputFileName);
+					//printf("Output filename: %s\n", result->outputFileName);
 					foundOutputFilename = true;
 					break;
 				}
@@ -186,7 +186,7 @@ CLA* setup(int argc, char* argv[])
 				{
 					result->messageOutputFilename = argv[i + 1];
 
-					printf("Message output filename: %s\n", result->messageOutputFilename);
+					//printf("Message output filename: %s\n", result->messageOutputFilename);
 					break;
 				}
 				else
@@ -231,7 +231,7 @@ void run(CLA* CLA)
 			writeMessageFile(CLA);
 		}
 
-		printf("Decoded message: %s\n", CLA->message);
+		//printf("Decoded message: %s\n", CLA->message);
 	}
 
 	//Free the memory from the PNG struct

@@ -11,10 +11,11 @@
 #include "PNG_Util.h"
 #include "CommandLineParse.h"
 
-//TODO: Read message from a file
+//TODO: -v verbose mode
+//TODO: clean up code
 //TODO: encrypt message before storing?
 //TODO: Keep existing metadata intact when writing out a file
-//TODO: CLA->message should always allocate its own memory, copy the message and then be freed when finshed
+
 
 int main(int argc, char* argv[])
 {
